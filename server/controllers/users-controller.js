@@ -2,12 +2,9 @@ import express from "express";
 import usersBl from "../business-logic/users-bl.js";
 import generalSetting from "../common/config.js";
 import {
-  checkPassword,
-  checkResultStatus,
-  // getToken,
+   checkResultStatus,
 } from "../common/helper.js";
-import CryptoJS from "crypto-js";
-
+ 
 const usersRouter = express.Router();
 
 usersRouter.get(`${generalSetting.baseUrl}/users`, async (req, res) => {
@@ -29,30 +26,15 @@ usersRouter.get(`${generalSetting.baseUrl}/users/:email`, async (req, res) => {
     return res.send(getUserResult.data);
   }
 });
+usersRouter.post(`${generalSetting.baseUrl}/users/:username/:password`, async (req, res) => {
+  let userName = req.params.username;
+  let password = req.params.password;
 
-usersRouter.get(
-  `${generalSetting.baseUrl}/users/:email/:pass`,
-  async (req, res) => {
-    const email = req.params.email;
-    const password = CryptoJS.AES.encrypt(
-      req.params.pass,
-      generalSetting.CRYPTOJS_KEY
-    ).toString();
+  let result = await getUser(userName, password);
 
-    const getUserResult = await usersBl.getUserBy(email);
+  res.send(result);
+});
 
-    if (!checkResultStatus(getUserResult)) {
-      return res.status(500).send(getUserResult);
-    } else {
-      if (checkPassword(password, getUserResult.data[0].password)) {
-        // const userToken = getToken(email);
-        return res.send(getUserResult.data);
-      } else {
-        return res.json("Invalid Credentials");
-      }
-    }
-  }
-);
 
 usersRouter.post(`${generalSetting.baseUrl}/users`, async (req, res) => {
   const body = req.body;
