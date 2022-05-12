@@ -39,9 +39,9 @@ const addNewUser = async (newUser) => {
     ).toString();
 
     let resultPostToDB = await connection.promise()
-      .query(`INSERT INTO users (firstName, lastName, email, password, role)
+      .query(`INSERT INTO users (firstName, familyName, email, username, password, role)
         VALUES
-         ('${newUser.firstName}','${newUser.lastName}','${newUser.email}','${cryptoPassword}','user')`);
+         ('${newUser.firstName}','${newUser.familyName}','${newUser.email}','${newUser.username}''${cryptoPassword}','user')`);
     result.success = true;
     result.data = resultPostToDB[0];
   } catch (error) {
@@ -54,9 +54,9 @@ const addNewUser = async (newUser) => {
 const update = async (id, user) => {
   try {
     const updateUserResult = await connection.promise().query(
-      `UPDATE users SET firstName=?, lastName=?, email=?
+      `UPDATE users SET firstName=?, familyName=?, email=?
       WHERE id = ${id}`,
-      [user.firstName, user.lastName, user.email]
+      [user.firstName, user.familyName, user.email]
     );
     result.success = true;
     result.data = updateUserResult[0];

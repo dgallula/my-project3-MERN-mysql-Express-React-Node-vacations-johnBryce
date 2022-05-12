@@ -21,7 +21,7 @@ export default function Login() {
     // const [role, setRole] = useState(false)
 
     const handleClick = async () => {
-        const res = await fetch('http://localhost:1000/users/login', {
+        const res = await fetch('http://localhost:api5000/users', {
             method: "post",
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ username, password }),
@@ -66,7 +66,7 @@ export default function Login() {
                     </CardContent>
 
                     <CardActions>
-                        <Button onClick={handleClcik} size="small">Login</Button>
+                        <Button onClick={handleClick} size="small">Login</Button>
                     </CardActions>
                     <span>Dont have an account yet? <Link to="/register">Register Now</Link></span>
                 </Card>

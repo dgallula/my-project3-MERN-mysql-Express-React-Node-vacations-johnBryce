@@ -35,7 +35,7 @@ const getAllFollowers = async () => {
   try {
     let followersResult = await connection
       .promise()
-      .query(`SELECT *  FROM users_vacations`);
+      .query(`SELECT followers  FROM follow`);
     vacationsResult.success = true;
     vacationsResult.data = followersResult[0];
   } catch (error) {
@@ -44,11 +44,11 @@ const getAllFollowers = async () => {
   return vacationsResult;
 };
 
-const getNumOfVactoinsFollowers = async () => {
+const getNumOfVacationsFollowers = async () => {
   try {
     let followersResult = await connection.promise()
-      .query(`SELECT vacationId, userId, COUNT(userId) AS followers  FROM users_vacations
-        GROUP BY vacationId`);
+      .query(`select * from followedVacations;
+      `);
     vacationsResult.success = true;
     vacationsResult.data = followersResult[0];
   } catch (error) {
@@ -145,7 +145,7 @@ export default {
   anddNewVacation,
   deleteVacation,
   getAllFollowers,
-  getNumOfVactoinsFollowers,
+  getNumOfVacationsFollowers,
   addNewFollowerToDB,
   deleteFollower,
   update,

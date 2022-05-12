@@ -31,7 +31,7 @@ vacationsRouter.get(
 vacationsRouter.get(
   `${generalSetting.baseUrl}/group-vacations-followers`,
   async (req, res) => {
-    const getFollowersResult = await vacationsBl.getNumOfVactoinsFollowers();
+    const getFollowersResult = await vacationsBl.getNumOfVacationsFollowers();
     if (!checkResultStatus(getFollowersResult)) {
       return res.status(500).send(getFollowersResult);
     } else {
